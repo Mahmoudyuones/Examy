@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ExamyApp extends StatelessWidget {
   const ExamyApp({super.key});
@@ -11,10 +11,7 @@ class ExamyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const Scaffold(
-        body: Center(child: Text('Examy App')),
-      ),
+      home: const Scaffold(body: Center(child: Text('Examy App'))),
     );
   }
 }
-
