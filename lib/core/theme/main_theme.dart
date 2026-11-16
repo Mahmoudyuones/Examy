@@ -1,4 +1,5 @@
 import 'package:examy_app/core/theme/app_colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:material_ui/material_ui.dart';
 
 /// App colors: change these and the whole app updates.
@@ -36,6 +37,7 @@ class AppTheme {
       useMaterial3: true,
       colorScheme: scheme,
       scaffoldBackgroundColor: background,
+      fontFamily: GoogleFonts.inter().fontFamily,
 
       // Text
       textTheme: const TextTheme(
@@ -50,15 +52,16 @@ class AppTheme {
 
       // AppBar
       appBarTheme: AppBarTheme(
+        leadingWidth: 20,
         centerTitle: true,
         elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: background,
         foregroundColor: scheme.onSurface,
-        titleTextStyle: TextStyle(
+        titleTextStyle: const TextStyle(
           fontSize: 20,
-          fontWeight: FontWeight.w600,
-          color: scheme.onSurface,
+          fontWeight: FontWeight.w500,
+          color: AppColors.black,
         ),
       ),
 
@@ -71,7 +74,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_radius),
           ),
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
