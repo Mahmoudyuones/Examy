@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../core/constants/cache_constants.dart';
 import '../base_response/base_response.dart';
 import '../error_handler/error_handler.dart';
 import '../error_handler/local_exception.dart';
-import '../../core/constants/cache_constants.dart';
 
 @singleton
 class SecureStorageService {
@@ -14,7 +14,8 @@ class SecureStorageService {
 
   SecureStorageService()
     : _storage = const FlutterSecureStorage(
-        aOptions: AndroidOptions(encryptedSharedPreferences: true),
+        iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+        lOptions: LinuxOptions.defaultOptions,
       );
 
   Future<BaseResponse<String?>> read(String key) async {
@@ -93,9 +94,7 @@ class SecureStorageService {
       return await write(key, jsonEncode(value));
     } catch (e) {
       return BaseResponse.failure(
-        ErrorHandler.handle(
-          CacheError('Failed to encode JSON for "$key": $e'),
-        ),
+        ErrorHandler.handle(CacheError('Failed to encode JSON for "$key": $e')),
       );
     }
   }
@@ -114,4 +113,3 @@ class SecureStorageService {
     return delete(StorageKeys.accessToken);
   }
 }
-

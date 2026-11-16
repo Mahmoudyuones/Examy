@@ -1,3 +1,4 @@
+import 'package:examy_app/features/auth/forget_password/presentation/screens/forget_password_screen.dart';
 import 'package:material_ui/material_ui.dart';
 
 class ExamyApp extends StatelessWidget {
@@ -11,7 +12,7 @@ class ExamyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const Scaffold(body: Center(child: Text('Examy App'))),
+      home: const ForgetPasswordScreen(),
     );
   }
 }
