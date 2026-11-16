@@ -1,13 +1,13 @@
 import 'package:examy_app/core/theme/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_ui/material_ui.dart';
-
-/// App colors: change these and the whole app updates.
 
 class AppTheme {
   AppTheme._();
 
-  static const double _radius = 12;
+  // Not const anymore because .r depends on the screen size.
+  static double get _radius => 12.r;
 
   // ---------- Light ----------
   static ThemeData get light {
@@ -40,26 +40,26 @@ class AppTheme {
       fontFamily: GoogleFonts.inter().fontFamily,
 
       // Text
-      textTheme: const TextTheme(
-        headlineLarge: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-        headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-        titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        bodyLarge: TextStyle(fontSize: 16),
-        bodyMedium: TextStyle(fontSize: 14),
-        labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+      textTheme: TextTheme(
+        headlineLarge: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold),
+        headlineMedium: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
+        titleLarge: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
+        titleMedium: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+        bodyLarge: TextStyle(fontSize: 16.sp),
+        bodyMedium: TextStyle(fontSize: 14.sp),
+        labelLarge: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
       ),
 
       // AppBar
       appBarTheme: AppBarTheme(
-        leadingWidth: 20,
+        leadingWidth: 20.w,
         centerTitle: true,
         elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: background,
         foregroundColor: scheme.onSurface,
-        titleTextStyle: const TextStyle(
-          fontSize: 20,
+        titleTextStyle: TextStyle(
+          fontSize: 20.sp,
           fontWeight: FontWeight.w500,
           color: AppColors.black,
         ),
@@ -70,17 +70,17 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: scheme.primary,
           foregroundColor: scheme.onPrimary,
-          minimumSize: const Size(double.infinity, 52),
+          minimumSize: Size(double.infinity, 52.h),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_radius),
           ),
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          textStyle: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: scheme.primary,
-          minimumSize: const Size(double.infinity, 52),
+          minimumSize: Size(double.infinity, 52.h),
           side: BorderSide(color: scheme.primary),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_radius),
@@ -95,10 +95,7 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: scheme.surfaceContainerHighest.withValues(alpha: 0.4),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 16,
-        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_radius),
           borderSide: BorderSide.none,
@@ -109,7 +106,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_radius),
-          borderSide: BorderSide(color: scheme.primary, width: 1.5),
+          borderSide: BorderSide(color: scheme.primary, width: 1.5.w),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_radius),
@@ -117,7 +114,7 @@ class AppTheme {
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_radius),
-          borderSide: BorderSide(color: scheme.error, width: 1.5),
+          borderSide: BorderSide(color: scheme.error, width: 1.5.w),
         ),
       ),
 

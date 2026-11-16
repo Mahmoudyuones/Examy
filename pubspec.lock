@@ -283,6 +283,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_screenutil:
+    dependency: "direct main"
+    description:
+      name: flutter_screenutil
+      sha256: "8239210dd68bee6b0577aa4a090890342d04a136ce1c81f98ee513fc0ce891de"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.9.3"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -349,6 +357,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.0"
+  gap:
+    dependency: "direct main"
+    description:
+      name: gap
+      sha256: ba305c9fb29d48b4ddfc59cbe4a437fc67b2e18824ec7729196289504d50570b
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   get_it:
     dependency: "direct main"
     description:
