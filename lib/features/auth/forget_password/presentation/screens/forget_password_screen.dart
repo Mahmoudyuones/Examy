@@ -1,75 +1,68 @@
 import 'package:examy_app/core/constants/ui_strings.dart';
-import 'package:examy_app/core/theme/app_colors.dart';
+import 'package:examy_app/core/validators/app_validators.dart';
+import 'package:examy_app/features/auth/forget_password/presentation/widgets/auth_header.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:material_ui/material_ui.dart';
 
-class ForgetPasswordScreen extends StatelessWidget {
+class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
+
+  @override
+  State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
+}
+
+class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  void _onContinue() {
+    if (!_formKey.currentState!.validate()) return;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: Theme.of(context).appBarTheme
-            .copyWith(centerTitle: false)
-            .centerTitle,
-        title: Text(
-          AppStrings.password,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface,
-            fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
-          ),
-        ),
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(Icons.arrow_back_ios, size: 20.sp),
-        ),
-      ),
-
-      body: Center(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 50.w, right: 50.w),
-              child: Column(
-                children: [
-                  Gap(40.h),
-                  Text(
-                    AppStrings.forgetPassword,
-                    style: TextStyle(
-                      fontSize: Theme.of(context).textTheme
-                          .copyWith(
-                            titleLarge: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          )
-                          .titleLarge
-                          ?.fontSize,
-                    ),
+      appBar: AppBar(title: const Text(AppStrings.password)),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Form(
+            key: _formKey,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            child: Column(
+              children: [
+                const AuthHeader(
+                  title: AppStrings.forgetPassword,
+                  subtitle:
+                      AppStrings.pleaseEnterYourEmailAssociatedToYourAccount,
+                ),
+                TextFormField(
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: Validators.email,
+                  onChanged: (_) => setState(() {}), // refresh button state
+                  decoration: const InputDecoration(
+                    labelText: AppStrings.email,
+                    hintText: AppStrings.enterYourEmail,
                   ),
-                  Gap(16.h),
-                  Text(
-                    textAlign: TextAlign.center,
-                    AppStrings.pleaseeEnterYourEmailAssociatedToYourAccount,
-                    style: TextStyle(
-                      fontSize: Theme.of(context).textTheme
-                          .copyWith(
-                            bodyMedium: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.grey,
-                            ),
-                          )
-                          .bodyMedium
-                          ?.fontSize,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                Gap(48.h),
+                ElevatedButton(
+                  onPressed: Validators.isEmail(_emailController.text)
+                      ? _onContinue
+                      : null,
+                  child: const Text(AppStrings.continuee),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
