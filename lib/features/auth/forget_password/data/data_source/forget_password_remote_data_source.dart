@@ -1,6 +1,6 @@
-class ForgetPasswordRemoteDataSource {
-  Future<void> forgetPassword(String email) async {
-    // Implement the logic to send a password reset email here
-    // For example, you can use Firebase Auth or any other service
-  }
+import 'package:examy_app/config/base_response/base_response.dart';
+import 'package:examy_app/features/auth/forget_password/data/models/forget_password_body.dart';
+
+abstract class ForgetPasswordRemoteDataSource {
+  Future<BaseResponse<void>> forgetPassword(ForgetPasswordBody body);
 }

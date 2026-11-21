@@ -1,6 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:examy_app/config/base_response/base_response.dart';
-import 'package:examy_app/config/base_response/message_response.dart';
 import 'package:examy_app/core/constants/api_constants.dart';
 import 'package:examy_app/features/auth/forget_password/data/models/forget_password_reponse.dart';
 import 'package:retrofit/retrofit.dart';
