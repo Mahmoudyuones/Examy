@@ -28,6 +28,8 @@ import '../../features/auth/forget_password/domain/usecase/forget_password_useca
     as _i930;
 import '../../features/auth/forget_password/presentation/cubit/forget_password_view_model.dart'
     as _i759;
+import '../../features/auth/forget_password/presentation/view_model/forget_password_view_model.dart'
+    as _i1033;
 import '../dio_module/auth_interceptor.dart' as _i815;
 import '../dio_module/dio_module.dart' as _i773;
 import '../dio_module/logger_interceptor.dart' as _i754;
@@ -58,7 +60,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i951.ForgetPasswordRemoteDataSource>(
       () => _i159.ForgetPasswordRemoteDataSourceImpl(
-        restClient: gh<_i558.ForgetPasswordClient>(),
+        forgetPasswordClient: gh<_i558.ForgetPasswordClient>(),
       ),
     );
     gh.lazySingleton<_i484.ForgetPasswordRepo>(
@@ -73,6 +75,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i759.ForgetPasswordViewModel>(
       () => _i759.ForgetPasswordViewModel(
+        forgetPasswordUsecase: gh<_i930.ForgetPasswordUsecase>(),
+      ),
+    );
+    gh.factory<_i1033.ForgetPasswordViewModel>(
+      () => _i1033.ForgetPasswordViewModel(
         forgetPasswordUsecase: gh<_i930.ForgetPasswordUsecase>(),
       ),
     );

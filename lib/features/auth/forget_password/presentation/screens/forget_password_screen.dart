@@ -1,6 +1,9 @@
 import 'package:examy_app/core/constants/ui_strings.dart';
 import 'package:examy_app/core/validators/app_validators.dart';
+import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_state.dart';
+import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_view_model.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/widgets/auth_header.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:material_ui/material_ui.dart';
@@ -24,6 +27,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
   void _onContinue() {
     if (!_formKey.currentState!.validate()) return;
+    context.read<ForgetPasswordViewModel>().forgetPassword(
+      _emailController.text.trim(),
+    );
   }
 
   @override
@@ -54,11 +60,44 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   ),
                 ),
                 Gap(48.h),
-                ElevatedButton(
-                  onPressed: Validators.isEmail(_emailController.text)
-                      ? _onContinue
-                      : null,
-                  child: const Text(AppStrings.continuee),
+                BlocConsumer<ForgetPasswordViewModel, ForgetPasswordState>(
+                  listener: (context, state) {
+                    state.whenOrNull(
+                      success: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(AppStrings.passwordResetEmailSent),
+                          ),
+                        );
+                      },
+                      error: (errMessage) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text(errMessage)));
+                      },
+                    );
+                  },
+                  builder: (context, state) {
+                    final isLoading = state.maybeWhen(
+                      loading: () => true,
+                      orElse: () => false,
+                    );
+                    return ElevatedButton(
+                      onPressed:
+                          Validators.isEmail(_emailController.text.trim())
+                          ? _onContinue
+                          : null,
+                      child: isLoading
+                          ? SizedBox(
+                              height: 20.h,
+                              width: 20.h,
+                              child: const CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Text(AppStrings.continuee),
+                    );
+                  },
                 ),
               ],
             ),

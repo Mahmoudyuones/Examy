@@ -8,19 +8,17 @@ import '../../data/data_source/forget_password_remote_data_source.dart';
 @LazySingleton(as: ForgetPasswordRemoteDataSource)
 class ForgetPasswordRemoteDataSourceImpl
     extends ForgetPasswordRemoteDataSource {
-  final ForgetPasswordClient restClient;
+  final ForgetPasswordClient forgetPasswordClient;
 
-  ForgetPasswordRemoteDataSourceImpl({required this.restClient});
+  ForgetPasswordRemoteDataSourceImpl({required this.forgetPasswordClient});
 
   @override
   Future<BaseResponse<void>> forgetPassword(ForgetPasswordBody body) async {
     try {
-      await restClient.forgetPassword(body.email);
+      await forgetPasswordClient.forgetPassword({'email': body.email});
       return SuccessBaseResponse(data: null);
     } catch (e) {
-      return ErrorBaseResponse.fromErrorMsg(
-        'Failed to send password reset email: $e',
-      );
+      return ErrorBaseResponse(errorObj: e);
     }
   }
 }

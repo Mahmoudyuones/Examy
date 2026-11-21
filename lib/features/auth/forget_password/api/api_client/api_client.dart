@@ -12,6 +12,8 @@ abstract class ForgetPasswordClient {
   @factoryMethod
   factory ForgetPasswordClient(Dio dio) = _ForgetPasswordClient;
 
-  @GET(ApiConstants.forgetPasswordEndpoint)
-  Future<ForgetPasswordResponse> forgetPassword(@Query('email') String email);
+  @POST(ApiConstants.forgetPasswordEndpoint)
+  Future<ForgetPasswordResponse> forgetPassword(
+    @Body() Map<String, dynamic> body,
+  );
 }

@@ -21,13 +21,16 @@ class _ForgetPasswordClient implements ForgetPasswordClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ForgetPasswordResponse> forgetPassword(String email) async {
+  Future<ForgetPasswordResponse> forgetPassword(
+    Map<String, dynamic> body,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'email': email};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
     final _options = _setStreamType<ForgetPasswordResponse>(
-      Options(method: 'GET', headers: _headers, extra: _extra)
+      Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
             '/api/v1/auth/forgotPassword',
