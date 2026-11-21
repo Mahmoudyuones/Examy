@@ -1,53 +1,63 @@
-import '../error_handler/error_handler.dart';
+import 'dart:developer';
 
-sealed class BaseResponse<T> {
-  const BaseResponse();
+import 'package:dio/dio.dart';
+import 'package:examy_app/core/constants/api_constants.dart';
 
-  const factory BaseResponse.success(T data) = Success<T>;
+sealed class BaseResponse<T> {}
 
-  factory BaseResponse.failure(ErrorHandler errorHandler) = Failure<T>;
+class SuccessBaseResponse<T> extends BaseResponse<T> {
+  T data;
 
-  R when<R>({
-    required R Function(T data) success,
-    required R Function(ErrorHandler error) failure,
-  });
+  SuccessBaseResponse({required this.data});
 }
 
-final class Success<T> extends BaseResponse<T> {
-  final T data;
-  const Success(this.data);
+class ErrorBaseResponse<T> extends BaseResponse<T> {
+  String errMessage;
 
-  @override
-  R when<R>({
-    required R Function(T data) success,
-    required R Function(ErrorHandler error) failure,
-  }) =>
-      success(data);
-}
+  ErrorBaseResponse.fromErrorMsg(this.errMessage);
 
-final class Failure<T> extends BaseResponse<T> {
-  final ErrorHandler errorHandler;
-  const Failure(this.errorHandler);
+  ErrorBaseResponse({Object? errorObj})
+    : errMessage = errorObj == null
+          ? ApiConstants.genericErrorMsg
+          : _getErrorMsg(errorObj);
 
-  @override
-  R when<R>({
-    required R Function(T data) success,
-    required R Function(ErrorHandler error) failure,
-  }) =>
-      failure(errorHandler);
-}
+  static String _getErrorMsg(Object error) {
+    //Extract Msg Logic
+    if (error is DioException) {
+      log(error.message ?? "No Dio Msg", name: "DioException Msg");
 
-extension BaseResponseX<T> on BaseResponse<T> {
-  bool get isSuccess => this is Success<T>;
-  bool get isFailure => this is Failure<T>;
+      switch (error.type) {
+        case DioExceptionType.connectionTimeout:
+        case DioExceptionType.receiveTimeout:
+          return "No Internet";
+        case DioExceptionType.badResponse:
+          int statusCode = error.response?.statusCode ?? 404;
+          //404, 403, 500, 400-499, 500+
+          return _getStatusCodeErrorMsg(statusCode);
 
-  T? get dataOrNull => switch (this) {
-    Success(:final data) => data,
-    Failure() => null,
-  };
+        default:
+          return ApiConstants.genericErrorMsg;
+      }
+    }
 
-  ErrorHandler? get errorOrNull => switch (this) {
-    Success() => null,
-    Failure(:final errorHandler) => errorHandler,
-  };
+    switch (error) {
+      default:
+        return ApiConstants.genericErrorMsg;
+    }
+  }
+
+  static String _getStatusCodeErrorMsg(int code) {
+    switch (code) {
+      case 400:
+        return "This is 400 code";
+      case 404:
+        return "This is 404 code";
+      case 403:
+        return "Unauthorized";
+      case 500:
+        return "Server Error";
+      default:
+        return ApiConstants.genericErrorMsg;
+    }
+  }
 }
