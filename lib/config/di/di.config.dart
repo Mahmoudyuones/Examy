@@ -14,6 +14,20 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/auth/forget_password/api/api_client/api_client.dart'
+    as _i558;
+import '../../features/auth/forget_password/api/data_source/forget_password_remote_data_source_impl.dart'
+    as _i159;
+import '../../features/auth/forget_password/data/data_source/forget_password_remote_data_source.dart'
+    as _i951;
+import '../../features/auth/forget_password/data/repo/forget_password_repo_impl.dart'
+    as _i610;
+import '../../features/auth/forget_password/domain/repo/forget_password_repo.dart'
+    as _i484;
+import '../../features/auth/forget_password/domain/usecase/forget_password_usecase.dart'
+    as _i930;
+import '../../features/auth/forget_password/presentation/cubit/forget_password_view_model.dart'
+    as _i759;
 import '../dio_module/auth_interceptor.dart' as _i815;
 import '../dio_module/dio_module.dart' as _i773;
 import '../dio_module/logger_interceptor.dart' as _i754;
@@ -37,6 +51,29 @@ extension GetItInjectableX on _i174.GetIt {
       () => dioModule.dio(
         gh<_i815.AuthInterceptor>(),
         gh<_i754.LoggerInterceptor>(),
+      ),
+    );
+    gh.lazySingleton<_i558.ForgetPasswordClient>(
+      () => _i558.ForgetPasswordClient(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i951.ForgetPasswordRemoteDataSource>(
+      () => _i159.ForgetPasswordRemoteDataSourceImpl(
+        restClient: gh<_i558.ForgetPasswordClient>(),
+      ),
+    );
+    gh.lazySingleton<_i484.ForgetPasswordRepo>(
+      () => _i610.ForgetPasswordRepoImpl(
+        remoteDataSource: gh<_i951.ForgetPasswordRemoteDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i930.ForgetPasswordUsecase>(
+      () => _i930.ForgetPasswordUsecase(
+        forgetPasswordRepo: gh<_i484.ForgetPasswordRepo>(),
+      ),
+    );
+    gh.factory<_i759.ForgetPasswordViewModel>(
+      () => _i759.ForgetPasswordViewModel(
+        forgetPasswordUsecase: gh<_i930.ForgetPasswordUsecase>(),
       ),
     );
     return this;

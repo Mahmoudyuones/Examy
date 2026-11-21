@@ -1,5 +1,7 @@
 name: examy_app
-description: "A new Flutter project."
+description: "Examy is a mobile application that allows users to take exams and
+  tests online. It provides a user-friendly interface for students to access
+  various subjects and practice their knowledge."
 publish_to: "none"
 
 version: 1.0.0+1
@@ -16,22 +18,22 @@ dependencies:
   flutter_bloc: ^9.1.0
   flutter_screenutil: ^5.9.3
   flutter_secure_storage: ^11.2.0
+  freezed: ^4.0.3
+  freezed_annotation: ^3.1.0
   gap: ^3.1.0
   get_it: ^8.0.3
   google_fonts: ^9.0.0
-  injectable: ^2.5.0
-  json_serializable: ^6.15.2
-  material_ui: any
+  injectable: ^3.0.0
+  json_annotation: ^4.9.0
   pinput: ^7.0.0
   retrofit: ^4.10.0
-  json_annotation: any
+
+  material_ui: any
 dev_dependencies:
   build_runner: ^2.15.1
   flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
-  injectable_generator: ^2.10.0
+  injectable_generator: ^3.1.3
+  json_serializable: ^6.15.2
   retrofit_generator: ^10.3.3
-
-flutter:
-  uses-material-design: true

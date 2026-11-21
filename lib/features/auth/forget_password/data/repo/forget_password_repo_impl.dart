@@ -3,7 +3,9 @@ import 'package:examy_app/features/auth/forget_password/data/data_source/forget_
 import 'package:examy_app/features/auth/forget_password/data/models/forget_password_body.dart';
 import 'package:examy_app/features/auth/forget_password/domain/entities/forget_password_entity.dart';
 import 'package:examy_app/features/auth/forget_password/domain/repo/forget_password_repo.dart';
+import 'package:injectable/injectable.dart';
 
+@LazySingleton(as: ForgetPasswordRepo)
 class ForgetPasswordRepoImpl extends ForgetPasswordRepo {
   final ForgetPasswordRemoteDataSource remoteDataSource;
   ForgetPasswordRepoImpl({required this.remoteDataSource});
