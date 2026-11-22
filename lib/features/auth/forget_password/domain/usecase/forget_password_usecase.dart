@@ -10,8 +10,9 @@ class ForgetPasswordUsecase {
 
   Future<BaseResponse<void>> forgetPassword(String email) async {
     final entity = ForgetPasswordEntity(email: email);
-    switch (await forgetPasswordRepo.forgetPassword(entity)) {
-      case SuccessBaseResponse<void> success:
+    final response = await forgetPasswordRepo.forgetPassword(entity);
+    switch (response) {
+      case SuccessBaseResponse<void> response:
         return SuccessBaseResponse(data: null);
       case ErrorBaseResponse error:
         return ErrorBaseResponse.fromErrorMsg(error.errMessage);

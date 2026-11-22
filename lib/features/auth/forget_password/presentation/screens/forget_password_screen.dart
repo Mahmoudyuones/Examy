@@ -1,7 +1,10 @@
+import 'package:examy_app/config/di/di.dart';
 import 'package:examy_app/core/constants/ui_strings.dart';
 import 'package:examy_app/core/validators/app_validators.dart';
-import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_state.dart';
-import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_view_model.dart';
+import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_cubit/forget_password_state.dart';
+import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_cubit/forget_password_view_model.dart';
+import 'package:examy_app/features/auth/forget_password/presentation/cubit/reset_code_cubit/reset_code_view_model.dart';
+import 'package:examy_app/features/auth/forget_password/presentation/screens/email_verification_screen.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/widgets/auth_header.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,6 +70,15 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(AppStrings.passwordResetEmailSent),
+                          ),
+                        );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider(
+                              create: (context) => getIt<ResetCodeViewModel>(),
+                              child: const EmailVerificationScreen(),
+                            ),
                           ),
                         );
                       },

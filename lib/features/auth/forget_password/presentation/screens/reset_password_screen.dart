@@ -6,7 +6,8 @@ import 'package:gap/gap.dart';
 import 'package:material_ui/material_ui.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+  const ResetPasswordScreen({super.key, required this.email});
+  final String? email;
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();

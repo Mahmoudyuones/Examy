@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'forget_password_state.dart';
+part of 'reset_code_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,7 +13,7 @@ part of 'forget_password_state.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$ForgetPasswordState {
+mixin _$ResetCodeState {
 
 
 
@@ -21,7 +21,7 @@ mixin _$ForgetPasswordState {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is ForgetPasswordState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ResetCodeState);
 }
 
 
@@ -30,20 +30,20 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-    return 'ForgetPasswordState()';
+    return 'ResetCodeState()';
 }
 
 
 }
 
 /// @nodoc
-class $ForgetPasswordStateCopyWith<$Res>  {
-$ForgetPasswordStateCopyWith(ForgetPasswordState _, $Res Function(ForgetPasswordState) __);
+class $ResetCodeStateCopyWith<$Res>  {
+$ResetCodeStateCopyWith(ResetCodeState _, $Res Function(ResetCodeState) __);
 }
 
 
-/// Adds pattern-matching-related methods to [ForgetPasswordState].
-extension ForgetPasswordStatePatterns on ForgetPasswordState {
+/// Adds pattern-matching-related methods to [ResetCodeState].
+extension ResetCodeStatePatterns on ResetCodeState {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -193,7 +193,7 @@ return error(_that.message);case _:
 /// @nodoc
 
 
-class _Initial implements ForgetPasswordState {
+class _Initial implements ResetCodeState {
   const _Initial();
   
 
@@ -213,7 +213,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-    return 'ForgetPasswordState.initial()';
+    return 'ResetCodeState.initial()';
 }
 
 
@@ -225,7 +225,7 @@ String toString() {
 /// @nodoc
 
 
-class _Loading implements ForgetPasswordState {
+class _Loading implements ResetCodeState {
   const _Loading();
   
 
@@ -245,7 +245,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-    return 'ForgetPasswordState.loading()';
+    return 'ResetCodeState.loading()';
 }
 
 
@@ -257,7 +257,7 @@ String toString() {
 /// @nodoc
 
 
-class _Success implements ForgetPasswordState {
+class _Success implements ResetCodeState {
   const _Success();
   
 
@@ -277,7 +277,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-    return 'ForgetPasswordState.success()';
+    return 'ResetCodeState.success()';
 }
 
 
@@ -289,13 +289,13 @@ String toString() {
 /// @nodoc
 
 
-class _Error implements ForgetPasswordState {
+class _Error implements ResetCodeState {
   const _Error(this.message);
   
 
  final  String message;
 
-/// Create a copy of ForgetPasswordState
+/// Create a copy of ResetCodeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -316,14 +316,14 @@ int get hashCode {
 
 @override
 String toString() {
-    return 'ForgetPasswordState.error(message: $message)';
+    return 'ResetCodeState.error(message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res> implements $ForgetPasswordStateCopyWith<$Res> {
+abstract mixin class _$ErrorCopyWith<$Res> implements $ResetCodeStateCopyWith<$Res> {
   factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
 @useResult
 $Res call({
@@ -342,7 +342,7 @@ class __$ErrorCopyWithImpl<$Res>
   final _Error _self;
   final $Res Function(_Error) _then;
 
-/// Create a copy of ForgetPasswordState
+/// Create a copy of ResetCodeState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
   return _then(_Error(

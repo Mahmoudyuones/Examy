@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:examy_app/core/constants/api_constants.dart';
+import 'package:examy_app/features/auth/forget_password/data/models/forget_password_body.dart';
 import 'package:examy_app/features/auth/forget_password/data/models/forget_password_reponse.dart';
+import 'package:examy_app/features/auth/forget_password/data/models/reset_code_body.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -14,6 +16,9 @@ abstract class ForgetPasswordClient {
 
   @POST(ApiConstants.forgetPasswordEndpoint)
   Future<ForgetPasswordResponse> forgetPassword(
-    @Body() Map<String, dynamic> body,
+    @Body() ForgetPasswordBody body,
   );
+
+  @POST(ApiConstants.verifyResetCode)
+  Future<ForgetPasswordResponse> verifyResetCode(@Body() ResetCodeBody body);
 }
