@@ -1,53 +1,75 @@
-import '../error_handler/error_handler.dart';
+import 'dart:developer';
 
-sealed class BaseResponse<T> {
-  const BaseResponse();
+import 'package:dio/dio.dart';
+import 'package:examy_app/core/constants/api_constants.dart';
 
-  const factory BaseResponse.success(T data) = Success<T>;
+sealed class BaseResponse<T> {}
 
-  factory BaseResponse.failure(ErrorHandler errorHandler) = Failure<T>;
-
-  R when<R>({
-    required R Function(T data) success,
-    required R Function(ErrorHandler error) failure,
-  });
-}
-
-final class Success<T> extends BaseResponse<T> {
+class SuccessBaseResponse<T> extends BaseResponse<T> {
   final T data;
-  const Success(this.data);
 
-  @override
-  R when<R>({
-    required R Function(T data) success,
-    required R Function(ErrorHandler error) failure,
-  }) =>
-      success(data);
+  SuccessBaseResponse({required this.data});
 }
 
-final class Failure<T> extends BaseResponse<T> {
-  final ErrorHandler errorHandler;
-  const Failure(this.errorHandler);
+class ErrorBaseResponse<T> extends BaseResponse<T> {
+  final String errMessage;
 
-  @override
-  R when<R>({
-    required R Function(T data) success,
-    required R Function(ErrorHandler error) failure,
-  }) =>
-      failure(errorHandler);
-}
+  ErrorBaseResponse.fromErrorMsg(this.errMessage);
 
-extension BaseResponseX<T> on BaseResponse<T> {
-  bool get isSuccess => this is Success<T>;
-  bool get isFailure => this is Failure<T>;
+  ErrorBaseResponse({Object? errorObj})
+    : errMessage = errorObj == null
+          ? ApiConstants.genericErrorMsg
+          : _getErrorMsg(errorObj);
 
-  T? get dataOrNull => switch (this) {
-    Success(:final data) => data,
-    Failure() => null,
-  };
+  static String _getErrorMsg(Object error) {
+    if (error is DioException) {
+      log(error.message ?? 'No Dio Msg', name: 'DioException Msg');
 
-  ErrorHandler? get errorOrNull => switch (this) {
-    Success() => null,
-    Failure(:final errorHandler) => errorHandler,
-  };
+      switch (error.type) {
+        case DioExceptionType.connectionTimeout:
+        case DioExceptionType.sendTimeout:
+        case DioExceptionType.receiveTimeout:
+        case DioExceptionType.connectionError:
+          return 'No internet connection. Please check your network.';
+
+        case DioExceptionType.badResponse:
+          final serverMsg = _extractServerMessage(error.response?.data);
+          if (serverMsg != null) return serverMsg;
+
+          return _getStatusCodeErrorMsg(error.response?.statusCode);
+
+        case DioExceptionType.cancel:
+          return 'Request was cancelled.';
+
+        default:
+          return ApiConstants.genericErrorMsg;
+      }
+    }
+
+    return ApiConstants.genericErrorMsg;
+  }
+
+  static String? _extractServerMessage(dynamic data) {
+    if (data is Map) {
+      final msg = data['message'] ?? data['error'];
+      if (msg is String && msg.trim().isNotEmpty) return msg;
+    }
+    return null;
+  }
+
+  static String _getStatusCodeErrorMsg(int? code) {
+    switch (code) {
+      case 400:
+        return 'Invalid request. Please check your data.';
+      case 401:
+      case 403:
+        return 'You are not authorized to do this.';
+      case 404:
+        return 'Not found.';
+      case 500:
+        return 'Server error. Please try again later.';
+      default:
+        return ApiConstants.genericErrorMsg;
+    }
+  }
 }
