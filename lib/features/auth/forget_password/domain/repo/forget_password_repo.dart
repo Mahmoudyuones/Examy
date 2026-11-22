@@ -4,5 +4,4 @@ import 'package:examy_app/features/auth/forget_password/domain/entities/reset_co
 
 abstract class ForgetPasswordRepo {
   Future<BaseResponse<void>> forgetPassword(ForgetPasswordEntity entity);
-  Future<BaseResponse<void>> verifyResetCode(ResetCodeEntity code);
 }

@@ -29,6 +29,7 @@ dependencies:
   retrofit: ^4.10.0
 
   material_ui: any
+  bloc: any
 dev_dependencies:
   build_runner: ^2.15.1
   flutter_lints: ^6.0.0

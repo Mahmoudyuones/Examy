@@ -1,6 +1,9 @@
 import 'package:examy_app/core/constants/ui_strings.dart';
 import 'package:examy_app/core/validators/app_validators.dart';
+import 'package:examy_app/features/auth/forget_password/presentation/cubit/reset_password_cubit/reset_password_state.dart';
+import 'package:examy_app/features/auth/forget_password/presentation/cubit/reset_password_cubit/reset_password_view_model.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/widgets/auth_header.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:material_ui/material_ui.dart';
@@ -27,7 +30,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   void _onContinue() {
     if (!_formKey.currentState!.validate()) return;
-    // TODO: call cubit -> reset password
+    context.read<ResetPasswordViewModel>().resetPassword(
+      widget.email!,
+      _passwordController.text.trim(),
+    );
   }
 
   @override
@@ -68,9 +74,34 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   ),
                 ),
                 Gap(32.h),
-                ElevatedButton(
-                  onPressed: _onContinue,
-                  child: const Text(AppStrings.continuee),
+                BlocConsumer<ResetPasswordViewModel, ResetPasswordState>(
+                  listener: (context, state) {
+                    state.whenOrNull(
+                      success: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(AppStrings.passwordResetSuccess),
+                          ),
+                        );
+                      },
+                      error: (errMessage) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text(errMessage)));
+                      },
+                    );
+                  },
+                  builder: (context, state) {
+                    final isLoading = state.maybeWhen(
+                      loading: () => true,
+                      orElse: () => false,
+                    );
+                    return ElevatedButton(
+                      onPressed: _onContinue,
+                      child: isLoading
+                          ? const CircularProgressIndicator()
+                          : const Text(AppStrings.continuee),
+                    );
+                  },
                 ),
               ],
             ),

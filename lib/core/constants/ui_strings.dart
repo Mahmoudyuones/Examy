@@ -29,4 +29,5 @@ class AppStrings {
   static const String passwordsDontMatch = "Passwords don't match";
   static const String passwordResetEmailSent = 'Password reset email sent';
   static const String codeVerified = 'Code verified';
+  static const String passwordResetSuccess = 'Password reset successfully';
 }
