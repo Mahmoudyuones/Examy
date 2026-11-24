@@ -8,9 +8,27 @@ class ErrorModel {
     required Map<String, dynamic> json,
     required int? statusCode,
   }) {
-    return ErrorModel(
-      message: json['error'] ?? 'Unknown error',
-      code: statusCode,
-    );
+    final dynamic error = json['error'];
+    final dynamic message = json['message'];
+    final dynamic errors = json['errors'];
+
+    String extractedMessage;
+    if (error is String && error.isNotEmpty) {
+      extractedMessage = error;
+    } else if (message is String && message.isNotEmpty) {
+      extractedMessage = message;
+    } else if (errors is Map<String, dynamic>) {
+      final values = errors.values
+          .whereType<List>()
+          .expand((value) => value)
+          .whereType<String>();
+      extractedMessage = values.isNotEmpty
+          ? values.join('\n')
+          : 'Unknown error';
+    } else {
+      extractedMessage = 'Unknown error';
+    }
+
+    return ErrorModel(message: extractedMessage, code: statusCode);
   }
 }

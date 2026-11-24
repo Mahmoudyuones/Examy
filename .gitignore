@@ -33,6 +33,13 @@ migrate_working_dir/
 /build/
 /coverage/
 
+# Dart code generation
+*.g.dart
+*.freezed.dart
+*.mocks.dart
+*.config.dart
+devtools_options.yaml
+
 # Symbolication related
 app.*.symbols
 

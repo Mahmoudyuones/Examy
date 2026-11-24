@@ -1,6 +1,10 @@
+import 'package:examy_app/config/router/app_router.dart';
+import 'package:examy_app/config/router/app_routes.dart';
 import 'package:examy_app/core/theme/main_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:material_ui/material_ui.dart';
+
+void main() => runApp(const ExamyApp());
 
 class ExamyApp extends StatelessWidget {
   const ExamyApp({super.key});
@@ -8,19 +12,18 @@ class ExamyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 812),
+      designSize: const Size(382, 792),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child) {
-        return MaterialApp(
-          title: 'Examy',
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.light as ThemeData?,
-          darkTheme: AppTheme.dark as ThemeData?,
-          themeMode: ThemeMode.system,
-          home: const Scaffold(body: Center(child: Text('Examy App'))),
-        );
-      },
+      builder: (context, child) => MaterialApp(
+        title: 'Examy',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.light,
+        darkTheme: AppTheme.dark,
+        themeMode: ThemeMode.system,
+        initialRoute: AppRoutes.login,
+        onGenerateRoute: AppRouter.onGenerateRoute,
+      ),
     );
   }
 }
