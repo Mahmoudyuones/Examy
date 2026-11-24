@@ -56,3 +56,22 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+
+# Secrets
+.env
+.env.*
+*.jks
+*.keystore
+key.properties
+
+# Firebase
+google-services.json
+GoogleService-Info.plist
+
+# Android local
+local.properties
+.gradle/
+
+# Release builds
+*.apk
+*.aab

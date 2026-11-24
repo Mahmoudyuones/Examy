@@ -10,7 +10,6 @@ class AppTheme {
     borderSide: BorderSide(color: color),
   );
 
-  /// Shared by light & dark. Only the focused border color differs.
   static InputDecorationTheme _inputDecorationTheme(Color focusedColor) =>
       InputDecorationTheme(
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -43,14 +42,18 @@ class AppTheme {
       );
 
   static ThemeData get light => ThemeData(
-    scaffoldBackgroundColor: AppColors.background,
+    useMaterial3: true,
+    brightness: Brightness.light,
+    scaffoldBackgroundColor: AppColors.lightBackground,
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.primary,
+      secondary: AppColors.secondary,
       error: AppColors.error,
+      brightness: Brightness.light,
     ),
     appBarTheme: AppBarTheme(
       centerTitle: false,
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.lightBackground,
       titleTextStyle: TextStyle(
         fontSize: 20.sp,
         fontWeight: FontWeight.w500,
@@ -80,14 +83,18 @@ class AppTheme {
   );
 
   static ThemeData get dark => ThemeData(
-    scaffoldBackgroundColor: AppColors.black,
+    useMaterial3: true,
+    brightness: Brightness.dark,
+    scaffoldBackgroundColor: AppColors.darkBackground,
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.primary,
+      secondary: AppColors.secondary,
       error: AppColors.error,
+      brightness: Brightness.dark,
     ),
     appBarTheme: AppBarTheme(
       centerTitle: false,
-      backgroundColor: AppColors.black,
+      backgroundColor: AppColors.darkBackground,
       titleTextStyle: TextStyle(
         fontSize: 20.sp,
         fontWeight: FontWeight.w500,
