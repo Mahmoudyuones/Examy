@@ -6,7 +6,7 @@ import 'package:examy_app/features/auth/forget_password/domain/repo/reset_code_r
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: ResetCodeRepo)
-class ResetCodeRepoImpl extends ResetCodeRepo {
+class ResetCodeRepoImpl implements ResetCodeRepo {
   final ForgetPasswordRemoteDataSource remoteDataSource;
 
   ResetCodeRepoImpl({required this.remoteDataSource});

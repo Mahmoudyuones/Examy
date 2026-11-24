@@ -15,13 +15,6 @@ class ResetPasswordUsecase {
   ) async {
     final entity = ResetPasswordEntity(email: email, newPassword: newPassword);
 
-    final response = await _resetPasswordRepo.resetPassword(entity);
-
-    switch (response) {
-      case SuccessBaseResponse():
-        return SuccessBaseResponse(data: null);
-      case ErrorBaseResponse error:
-        return ErrorBaseResponse.fromErrorMsg(error.errMessage);
-    }
+    return await _resetPasswordRepo.resetPassword(entity);
   }
 }

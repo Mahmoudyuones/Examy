@@ -1,9 +1,8 @@
-class ResetCodeBody {
-  final String resetCode;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  ResetCodeBody({required this.resetCode});
+part 'reset_code_body.freezed.dart';
 
-  Map<String, dynamic> toJson() {
-    return {'resetCode': resetCode};
-  }
+@freezed
+abstract class ResetCodeBody with _$ResetCodeBody {
+  const factory ResetCodeBody({required String resetCode}) = _ResetCodeBody;
 }

@@ -1,10 +1,11 @@
-class ResetPasswordBody {
-  final String email;
-  final String newPassword;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  ResetPasswordBody({required this.email, required this.newPassword});
+part 'reset_password_body.freezed.dart';
 
-  Map<String, dynamic> toJson() {
-    return {'email': email, 'newPassword': newPassword};
-  }
+@freezed
+abstract class ResetPasswordBody with _$ResetPasswordBody {
+  const factory ResetPasswordBody({
+    required String email,
+    required String newPassword,
+  }) = _ResetPasswordBody;
 }

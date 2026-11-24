@@ -11,13 +11,6 @@ class ResetCodeUsecase {
   Future<BaseResponse<void>> verifyResetCode(String code) async {
     final entity = ResetCodeEntity(code: code);
 
-    final response = await resetCodeRepo.verifyResetCode(entity);
-
-    switch (response) {
-      case SuccessBaseResponse<void> response:
-        return SuccessBaseResponse(data: null);
-      case ErrorBaseResponse error:
-        return ErrorBaseResponse.fromErrorMsg(error.errMessage);
-    }
+    return await resetCodeRepo.verifyResetCode(entity);
   }
 }

@@ -3,7 +3,7 @@ import 'package:examy_app/features/auth/forget_password/data/models/forget_passw
 import 'package:examy_app/features/auth/forget_password/data/models/reset_code_body.dart';
 import 'package:examy_app/features/auth/forget_password/data/models/reset_password_body.dart';
 
-abstract class ForgetPasswordRemoteDataSource {
+abstract interface class ForgetPasswordRemoteDataSource {
   Future<BaseResponse<void>> forgetPassword(ForgetPasswordBody body);
   Future<BaseResponse<void>> verifyResetCode(ResetCodeBody code);
   Future<BaseResponse<void>> resetPassword(ResetPasswordBody body);
