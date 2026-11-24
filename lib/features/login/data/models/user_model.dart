@@ -1,42 +1,23 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'user_model.freezed.dart';
 part 'user_model.g.dart';
 
-@JsonSerializable()
-class UserModel {
-  @JsonKey(name: '_id')
-  final String id;
-  @JsonKey(name: 'username')
-  final String username;
-  @JsonKey(name: 'firstName')
-  final String firstName;
-  @JsonKey(name: 'lastName')
-  final String lastName;
-  @JsonKey(name: 'email')
-  final String email;
-  @JsonKey(name: 'phone')
-  final String phone;
-  @JsonKey(name: 'role')
-  final String role;
-  @JsonKey(name: 'isVerified')
-  final bool isVerified;
-  @JsonKey(name: 'createdAt')
-  final DateTime createdAt;
-
-  UserModel({
-    required this.id,
-    required this.username,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.phone,
-    required this.role,
-    required this.isVerified,
-    required this.createdAt,
-  });
+@freezed
+abstract class UserModel with _$UserModel {
+  // ignore: invalid_annotation_target
+  const factory UserModel({
+    @JsonKey(name: '_id') required String id,
+    @JsonKey(name: 'username') required String username,
+    @JsonKey(name: 'firstName') required String firstName,
+    @JsonKey(name: 'lastName') required String lastName,
+    @JsonKey(name: 'email') required String email,
+    @JsonKey(name: 'phone') required String phone,
+    @JsonKey(name: 'role') required String role,
+    @JsonKey(name: 'isVerified') required bool isVerified,
+    @JsonKey(name: 'createdAt') required DateTime createdAt,
+  }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$UserModelToJson(this);
 }

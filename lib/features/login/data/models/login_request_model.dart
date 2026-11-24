@@ -1,16 +1,15 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'login_request_model.freezed.dart';
 part 'login_request_model.g.dart';
 
-@JsonSerializable()
-class LoginRequestModel {
-  final String email;
-  final String password;
-
-  const LoginRequestModel({required this.email, required this.password});
+@freezed
+abstract class LoginRequestModel with _$LoginRequestModel {
+  const factory LoginRequestModel({
+    required String email,
+    required String password,
+  }) = _LoginRequestModel;
 
   factory LoginRequestModel.fromJson(Map<String, dynamic> json) =>
       _$LoginRequestModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$LoginRequestModelToJson(this);
 }

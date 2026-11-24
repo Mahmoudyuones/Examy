@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'user_model.dart';
 
-part 'login_response_model.g.dart';
+part 'login_reponse_model.freezed.dart';
+part 'login_reponse_model.g.dart';
 
 LoginResponseModel loginResponseModelFromJson(String str) =>
     LoginResponseModel.fromJson(json.decode(str));
@@ -12,23 +13,16 @@ LoginResponseModel loginResponseModelFromJson(String str) =>
 String loginResponseModelToJson(LoginResponseModel data) =>
     json.encode(data.toJson());
 
-@JsonSerializable()
-class LoginResponseModel {
-  @JsonKey(name: 'message')
-  final String message;
-  @JsonKey(name: 'token')
-  final String token;
-  @JsonKey(name: 'user')
-  final UserModel user;
-
-  LoginResponseModel({
-    required this.message,
-    required this.token,
-    required this.user,
-  });
+@freezed
+abstract class LoginResponseModel with _$LoginResponseModel {
+  // ignore: invalid_annotation_target
+  @JsonSerializable(explicitToJson: true)
+  const factory LoginResponseModel({
+    @JsonKey(name: 'message') required String message,
+    @JsonKey(name: 'token') required String token,
+    @JsonKey(name: 'user') required UserModel user,
+  }) = _LoginResponseModel;
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) =>
       _$LoginResponseModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$LoginResponseModelToJson(this);
 }

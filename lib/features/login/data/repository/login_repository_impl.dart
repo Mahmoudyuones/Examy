@@ -1,4 +1,5 @@
 import 'package:examy_app/config/base_response/base_response.dart';
+import 'package:examy_app/config/network/safe_api_call.dart';
 import 'package:examy_app/features/login/data/datasources/local/local_login_data_source.dart';
 import 'package:examy_app/features/login/data/datasources/remote/remote_login_data_source.dart';
 import 'package:examy_app/features/login/data/mappers/login_request_mapper.dart';
@@ -17,7 +18,9 @@ class LoginRepositoryImpl implements LoginRepository {
   });
   @override
   Future<BaseResponse<void>> login(LoginRequestEntity request) async {
-    final remoteResponse = await remoteDataSource.login(request.toModel());
+    final remoteResponse = await safeApiCall(
+      () => remoteDataSource.login(request.toModel()),
+    );
     return remoteResponse.when(
       success: (loginResponse) async {
         if (request.isRememberMe) {

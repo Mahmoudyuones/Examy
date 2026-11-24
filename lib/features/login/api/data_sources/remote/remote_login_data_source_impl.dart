@@ -1,5 +1,3 @@
-import 'package:examy_app/config/base_response/base_response.dart';
-import 'package:examy_app/config/network/safe_api_call.dart';
 import 'package:examy_app/features/login/api/api_client/login_api_client.dart';
 import 'package:examy_app/features/login/data/datasources/remote/remote_login_data_source.dart';
 import 'package:examy_app/features/login/data/models/login_reponse_model.dart';
@@ -12,7 +10,6 @@ class RemoteLoginDataSourceImpl implements RemoteLoginDataSource {
   RemoteLoginDataSourceImpl(this._loginApiClient);
 
   @override
-  Future<BaseResponse<LoginResponseModel>> login(LoginRequestModel body) {
-    return safeApiCall<LoginResponseModel>(() => _loginApiClient.login(body));
-  }
+  Future<LoginResponseModel> login(LoginRequestModel body) =>
+      _loginApiClient.login(body);
 }
