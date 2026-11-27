@@ -9,4 +9,10 @@ class AppColors {
   static const Color black = Color(0xFF000000);
   static const Color grey = Color(0xFF808080);
   static const Color error = Color(0xFFD32F2F);
+  static const Color primary = Color(0xFF6C4DFF);
+  static const Color secondary = Color(0xFF00BFA6);
+  static const Color error = Color(0xFFE53935);
+
+  static const Color lightBackground = Color(0xFFF7F7FA);
+  static const Color darkBackground = Color(0xFF121212);
 }
