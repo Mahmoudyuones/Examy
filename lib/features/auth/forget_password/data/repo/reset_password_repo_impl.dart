@@ -1,6 +1,6 @@
 import 'package:examy_app/config/base_response/base_response.dart';
 import 'package:examy_app/features/auth/forget_password/data/data_source/forget_password_remote_data_source.dart';
-import 'package:examy_app/features/auth/forget_password/data/models/reset_password_body.dart';
+import 'package:examy_app/features/auth/forget_password/data/models/reset_password_request.dart';
 import 'package:examy_app/features/auth/forget_password/domain/entities/reset_password_entity.dart';
 import 'package:examy_app/features/auth/forget_password/domain/repo/reset_password_repo.dart';
 import 'package:injectable/injectable.dart';
@@ -12,7 +12,7 @@ class ResetPasswordRepoImpl implements ResetPasswordRepo {
 
   @override
   Future<BaseResponse<void>> resetPassword(ResetPasswordEntity entity) async {
-    final resetPasswordBody = ResetPasswordBody(
+    final resetPasswordBody = ResetPasswordRequest(
       email: entity.email,
       newPassword: entity.newPassword,
     );
