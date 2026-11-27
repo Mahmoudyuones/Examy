@@ -1,6 +1,8 @@
 import 'package:examy_app/core/constants/ui_strings.dart';
 import 'package:examy_app/core/theme/app_colors.dart';
+import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_cubit/forget_password_event.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_cubit/forget_password_view_model.dart';
+import 'package:examy_app/features/auth/forget_password/presentation/cubit/reset_code_cubit/reset_code_event.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/reset_code_cubit/reset_code_state.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/reset_code_cubit/reset_code_view_model.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/screens/reset_password_screen.dart';
@@ -31,14 +33,16 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   }
 
   void _verify(String code) {
-    context.read<ResetCodeViewModel>().verifyResetCode(code);
+    context.read<ResetCodeViewModel>().doEvent(EmailVerification(code: code));
   }
 
   void _resend() {
     if (widget.email != null) {
       _pinController.clear();
       context.read<ResetCodeViewModel>().reset();
-      context.read<ForgetPasswordViewModel>().forgetPassword(widget.email!);
+      context.read<ForgetPasswordViewModel>().doEvent(
+        SendEmail(email: widget.email!),
+      );
     }
   }
 

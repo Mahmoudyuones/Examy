@@ -1,6 +1,7 @@
 import 'package:examy_app/config/di/di.dart';
 import 'package:examy_app/core/constants/ui_strings.dart';
 import 'package:examy_app/core/validators/app_validators.dart';
+import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_cubit/forget_password_event.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_cubit/forget_password_state.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_cubit/forget_password_view_model.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/reset_code_cubit/reset_code_view_model.dart';
@@ -30,8 +31,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
   void _onContinue() {
     if (!_formKey.currentState!.validate()) return;
-    context.read<ForgetPasswordViewModel>().forgetPassword(
-      _emailController.text.trim(),
+    context.read<ForgetPasswordViewModel>().doEvent(
+      SendEmail(email: _emailController.text.trim()),
     );
   }
 

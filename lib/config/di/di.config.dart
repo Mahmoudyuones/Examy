@@ -22,16 +22,8 @@ import '../../features/auth/forget_password/data/data_source/forget_password_rem
     as _i951;
 import '../../features/auth/forget_password/data/repo/forget_password_repo_impl.dart'
     as _i610;
-import '../../features/auth/forget_password/data/repo/reset_code_repo_impl.dart'
-    as _i517;
-import '../../features/auth/forget_password/data/repo/reset_password_repo_impl.dart'
-    as _i909;
 import '../../features/auth/forget_password/domain/repo/forget_password_repo.dart'
     as _i484;
-import '../../features/auth/forget_password/domain/repo/reset_code_repo.dart'
-    as _i63;
-import '../../features/auth/forget_password/domain/repo/reset_password_repo.dart'
-    as _i235;
 import '../../features/auth/forget_password/domain/usecase/forget_password_usecase.dart'
     as _i930;
 import '../../features/auth/forget_password/domain/usecase/reset_code_usecase.dart'
@@ -77,45 +69,36 @@ extension GetItInjectableX on _i174.GetIt {
         forgetPasswordClient: gh<_i558.ForgetPasswordClient>(),
       ),
     );
-    gh.lazySingleton<_i63.ResetCodeRepo>(
-      () => _i517.ResetCodeRepoImpl(
-        remoteDataSource: gh<_i951.ForgetPasswordRemoteDataSource>(),
-      ),
-    );
     gh.lazySingleton<_i484.ForgetPasswordRepo>(
       () => _i610.ForgetPasswordRepoImpl(
         remoteDataSource: gh<_i951.ForgetPasswordRemoteDataSource>(),
       ),
     );
-    gh.lazySingleton<_i235.ResetPasswordRepo>(
-      () => _i909.ResetPasswordRepoImpl(
-        gh<_i951.ForgetPasswordRemoteDataSource>(),
-      ),
+    gh.factory<_i383.ResetPasswordUsecase>(
+      () => _i383.ResetPasswordUsecase(gh<_i484.ForgetPasswordRepo>()),
     );
-    gh.lazySingleton<_i467.ResetCodeUsecase>(
-      () => _i467.ResetCodeUsecase(resetCodeRepo: gh<_i63.ResetCodeRepo>()),
+    gh.factory<_i467.ResetCodeUsecase>(
+      () =>
+          _i467.ResetCodeUsecase(resetCodeRepo: gh<_i484.ForgetPasswordRepo>()),
+    );
+    gh.factory<_i619.ResetPasswordViewModel>(
+      () => _i619.ResetPasswordViewModel(
+        resetPasswordUsecase: gh<_i383.ResetPasswordUsecase>(),
+      ),
     );
     gh.factory<_i425.ResetCodeViewModel>(
       () => _i425.ResetCodeViewModel(
         resetCodeUsecase: gh<_i467.ResetCodeUsecase>(),
       ),
     );
-    gh.lazySingleton<_i930.ForgetPasswordUsecase>(
+    gh.factory<_i930.ForgetPasswordUsecase>(
       () => _i930.ForgetPasswordUsecase(
         forgetPasswordRepo: gh<_i484.ForgetPasswordRepo>(),
       ),
     );
-    gh.lazySingleton<_i383.ResetPasswordUsecase>(
-      () => _i383.ResetPasswordUsecase(gh<_i235.ResetPasswordRepo>()),
-    );
     gh.factory<_i902.ForgetPasswordViewModel>(
       () => _i902.ForgetPasswordViewModel(
         forgetPasswordUsecase: gh<_i930.ForgetPasswordUsecase>(),
-      ),
-    );
-    gh.factory<_i619.ResetPasswordViewModel>(
-      () => _i619.ResetPasswordViewModel(
-        resetPasswordUsecase: gh<_i383.ResetPasswordUsecase>(),
       ),
     );
     return this;

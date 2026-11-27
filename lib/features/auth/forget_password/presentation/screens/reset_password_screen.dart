@@ -1,5 +1,6 @@
 import 'package:examy_app/core/constants/ui_strings.dart';
 import 'package:examy_app/core/validators/app_validators.dart';
+import 'package:examy_app/features/auth/forget_password/presentation/cubit/reset_password_cubit/reset_password_event.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/reset_password_cubit/reset_password_state.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/reset_password_cubit/reset_password_view_model.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/widgets/auth_header.dart';
@@ -30,9 +31,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   void _onContinue() {
     if (!_formKey.currentState!.validate()) return;
-    context.read<ResetPasswordViewModel>().resetPassword(
-      widget.email!,
-      _passwordController.text.trim(),
+    context.read<ResetPasswordViewModel>().doEvent(
+      ResetPassword(
+        email: widget.email!,
+        newPassword: _passwordController.text.trim(),
+      ),
     );
   }
 

@@ -3,13 +3,13 @@ import 'package:examy_app/features/auth/forget_password/domain/entities/forget_p
 import 'package:examy_app/features/auth/forget_password/domain/repo/forget_password_repo.dart';
 import 'package:injectable/injectable.dart';
 
-@lazySingleton
+@injectable
 class ForgetPasswordUsecase {
-  final ForgetPasswordRepo forgetPasswordRepo;
-  ForgetPasswordUsecase({required this.forgetPasswordRepo});
+  final ForgetPasswordRepo _forgetPasswordRepo;
+  ForgetPasswordUsecase({required this._forgetPasswordRepo});
 
   Future<BaseResponse<void>> forgetPassword(String email) async {
     final entity = ForgetPasswordEntity(email: email);
-    return await forgetPasswordRepo.forgetPassword(entity);
+    return await _forgetPasswordRepo.forgetPassword(entity);
   }
 }
