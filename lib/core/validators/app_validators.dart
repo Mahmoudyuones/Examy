@@ -1,3 +1,5 @@
+import 'package:examy_app/core/constants/ui_strings.dart';
+
 import '../constants/validation_constants.dart';
 import 'app_regex.dart';
 
@@ -102,5 +104,22 @@ class AppValidators {
     }
 
     return null;
+  }
+}
+
+class Validators {
+  static bool isEmail(String v) =>
+      RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(v.trim());
+
+  static String? email(String? v) =>
+      (v == null || !isEmail(v)) ? AppStrings.emailNotValid : null;
+
+  static String? password(String? v) {
+    final p = v ?? '';
+    final ok =
+        p.length >= 6 &&
+        RegExp(r'[A-Z]').hasMatch(p) &&
+        RegExp(r'\d').hasMatch(p);
+    return ok ? null : AppStrings.passwordNotValid;
   }
 }

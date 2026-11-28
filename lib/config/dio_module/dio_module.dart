@@ -2,12 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../core/constants/api_constants.dart';
+import '../../core/constants/app_endpoints.dart';
 import 'auth_interceptor.dart';
 import 'logger_interceptor.dart';
 
 @module
-class DioModule {
+abstract class DioModule {
   @singleton
   Dio dio(
     AuthInterceptor authInterceptor,
@@ -15,7 +15,7 @@ class DioModule {
   ) {
     final dio = Dio(
       BaseOptions(
-        baseUrl: ApiConstants.baseUrl,
+        baseUrl: AppEndpoints.baseUrl,
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
         sendTimeout: const Duration(seconds: 30),

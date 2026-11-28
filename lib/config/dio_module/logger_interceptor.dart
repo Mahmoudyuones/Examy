@@ -7,7 +7,9 @@ import 'package:injectable/injectable.dart';
 class LoggerInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    log('REQUEST[${options.method}] => PATH: ${options.path}');
+    log('REQUEST[${options.method}] => ${options.baseUrl}${options.path}');
+    log('Headers: ${options.headers}');
+    log('Body: ${options.data}');
     handler.next(options);
   }
 
@@ -16,6 +18,7 @@ class LoggerInterceptor extends Interceptor {
     log(
       'RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}',
     );
+    log('Data: ${response.data}');
     handler.next(response);
   }
 
@@ -24,7 +27,8 @@ class LoggerInterceptor extends Interceptor {
     log(
       'ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}',
     );
+    log('Request body: ${err.requestOptions.data}');
+    log('Server response: ${err.response?.data}');
     handler.next(err);
   }
 }
-
