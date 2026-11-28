@@ -7,7 +7,7 @@ import 'auth_interceptor.dart';
 import 'logger_interceptor.dart';
 
 @module
-class DioModule {
+abstract class DioModule {
   @singleton
   Dio dio(
     AuthInterceptor authInterceptor,
