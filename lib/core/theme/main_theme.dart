@@ -1,148 +1,114 @@
 import 'package:examy_app/core/theme/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// App colors: change these and the whole app updates.
-
 class AppTheme {
-  AppTheme._();
+  static OutlineInputBorder _border(Color color) => OutlineInputBorder(
+    borderRadius: BorderRadius.circular(8.r),
+    borderSide: BorderSide(color: color),
+  );
 
-  static const double _radius = 12;
-
-  // ---------- Light ----------
-  static ThemeData get light {
-    final colorScheme = ColorScheme.fromSeed(
+  static ThemeData get light => ThemeData(
+    scaffoldBackgroundColor: AppColors.background,
+    colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.primary,
-      secondary: AppColors.secondary,
       error: AppColors.error,
-      brightness: Brightness.light,
-    );
-    return _base(colorScheme, AppColors.lightBackground);
-  }
+    ),
+    appBarTheme: AppBarTheme(
+      centerTitle: false,
+      backgroundColor: AppColors.background,
+      titleTextStyle: TextStyle(
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w500,
+        color: AppColors.black,
+      ),
+    ),
+    actionIconTheme: ActionIconThemeData(
+      backButtonIconBuilder: (_) => Icon(Icons.arrow_back_ios_new, size: 20.sp),
+    ),
+    textTheme: TextTheme(
+      titleLarge: TextStyle(
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w500,
+        color: AppColors.black,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w400,
+        color: AppColors.grey,
+      ),
+    ),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: AppColors.black,
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: _border(AppColors.grey),
+      enabledBorder: _border(AppColors.grey),
+      focusedBorder: _border(AppColors.black),
+      errorBorder: _border(AppColors.error),
+      focusedErrorBorder: _border(AppColors.error),
+      errorStyle: TextStyle(fontSize: 12.sp, color: AppColors.error),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size.fromHeight(52.h),
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+        disabledBackgroundColor: AppColors.grey,
+        disabledForegroundColor: Colors.white,
+        shape: const StadiumBorder(),
+      ),
+    ),
+  );
 
-  // ---------- Dark ----------
-  static ThemeData get dark {
-    final colorScheme = ColorScheme.fromSeed(
+  static ThemeData get dark => ThemeData(
+    scaffoldBackgroundColor: AppColors.black,
+    colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.primary,
-      secondary: AppColors.secondary,
       error: AppColors.error,
-      brightness: Brightness.dark,
-    );
-    return _base(colorScheme, AppColors.darkBackground);
-  }
-
-  // ---------- Shared config ----------
-  static ThemeData _base(ColorScheme scheme, Color background) {
-    return ThemeData(
-      useMaterial3: true,
-      colorScheme: scheme,
-      scaffoldBackgroundColor: background,
-
-      // Text
-      textTheme: const TextTheme(
-        headlineLarge: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-        headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-        titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        bodyLarge: TextStyle(fontSize: 16),
-        bodyMedium: TextStyle(fontSize: 14),
-        labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+    ),
+    appBarTheme: AppBarTheme(
+      centerTitle: false,
+      backgroundColor: AppColors.black,
+      titleTextStyle: TextStyle(
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w500,
+        color: Colors.white,
       ),
-
-      // AppBar
-      appBarTheme: AppBarTheme(
-        centerTitle: true,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        backgroundColor: background,
-        foregroundColor: scheme.onSurface,
-        titleTextStyle: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-          color: scheme.onSurface,
-        ),
+    ),
+    actionIconTheme: ActionIconThemeData(
+      backButtonIconBuilder: (_) => Icon(Icons.arrow_back_ios_new, size: 20.sp),
+    ),
+    textTheme: TextTheme(
+      titleLarge: TextStyle(
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w500,
+        color: Colors.white,
       ),
-
-      // Buttons
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: scheme.primary,
-          foregroundColor: scheme.onPrimary,
-          minimumSize: const Size(double.infinity, 52),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(_radius),
-          ),
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        ),
+      bodyMedium: TextStyle(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w400,
+        color: AppColors.grey,
       ),
-      outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: scheme.primary,
-          minimumSize: const Size(double.infinity, 52),
-          side: BorderSide(color: scheme.primary),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(_radius),
-          ),
-        ),
+    ),
+    textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.white),
+    inputDecorationTheme: InputDecorationTheme(
+      border: _border(AppColors.grey),
+      enabledBorder: _border(AppColors.grey),
+      focusedBorder: _border(Colors.white),
+      errorBorder: _border(AppColors.error),
+      focusedErrorBorder: _border(AppColors.error),
+      errorStyle: TextStyle(fontSize: 12.sp, color: AppColors.error),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size.fromHeight(52.h),
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+        disabledBackgroundColor: AppColors.grey,
+        disabledForegroundColor: Colors.white,
+        shape: const StadiumBorder(),
       ),
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(foregroundColor: scheme.primary),
-      ),
-
-      // TextField
-      inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        fillColor: scheme.surfaceContainerHighest.withValues(alpha: 0.4),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 16,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(_radius),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(_radius),
-          borderSide: BorderSide(color: scheme.outlineVariant),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(_radius),
-          borderSide: BorderSide(color: scheme.primary, width: 1.5),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(_radius),
-          borderSide: BorderSide(color: scheme.error),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(_radius),
-          borderSide: BorderSide(color: scheme.error, width: 1.5),
-        ),
-      ),
-
-      // Card
-      cardTheme: CardThemeData(
-        elevation: 0,
-        color: scheme.surface,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(_radius),
-          side: BorderSide(color: scheme.outlineVariant),
-        ),
-      ),
-
-      // Bottom navigation
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: scheme.surface,
-        selectedItemColor: scheme.primary,
-        unselectedItemColor: scheme.onSurfaceVariant,
-      ),
-
-      // SnackBar
-      snackBarTheme: SnackBarThemeData(
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(_radius),
-        ),
-      ),
-    );
-  }
+    ),
+  );
 }

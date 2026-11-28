@@ -1,3 +1,4 @@
+import 'package:examy_app/config/router/app_router.dart';
 import 'package:examy_app/core/theme/main_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:material_ui/material_ui.dart';
@@ -12,13 +13,13 @@ class ExamyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
+        return MaterialApp.router(
           title: 'Examy',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.light as ThemeData?,
           darkTheme: AppTheme.dark as ThemeData?,
-          themeMode: ThemeMode.system,
-          home: const Scaffold(body: Center(child: Text('Examy App'))),
+          themeMode: ThemeMode.light,
+          routerConfig: appRouter,
         );
       },
     );

@@ -1,5 +1,5 @@
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'config/bloc_observer/app_bloc_observer.dart';
 import 'config/di/di.dart';
