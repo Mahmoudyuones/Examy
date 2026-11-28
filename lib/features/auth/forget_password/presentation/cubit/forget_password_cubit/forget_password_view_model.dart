@@ -1,4 +1,5 @@
 import 'package:examy_app/config/base_response/base_response.dart';
+import 'package:examy_app/config/base_state/base_state.dart';
 import 'package:examy_app/features/auth/forget_password/domain/usecase/forget_password_usecase.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_cubit/forget_password_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +11,7 @@ import 'forget_password_state.dart';
 class ForgetPasswordViewModel extends Cubit<ForgetPasswordState> {
   final ForgetPasswordUsecase _forgetPasswordUsecase;
   ForgetPasswordViewModel({required this._forgetPasswordUsecase})
-    : super(const ForgetPasswordState.initial());
+    : super(ForgetPasswordState());
 
   void doEvent(ForgetPasswordEvent event) {
     switch (event) {
@@ -20,14 +21,25 @@ class ForgetPasswordViewModel extends Cubit<ForgetPasswordState> {
   }
 
   Future<void> _forgetPassword(String email) async {
-    emit(const ForgetPasswordState.loading());
+    emit(state.copyWith(forgetPasswordState: BaseState<bool>(isLoading: true)));
     final response = await _forgetPasswordUsecase.forgetPassword(email);
 
     switch (response) {
       case SuccessBaseResponse():
-        emit(const ForgetPasswordState.success());
+        emit(
+          state.copyWith(
+            forgetPasswordState: BaseState<bool>(data: true, isLoading: false),
+          ),
+        );
       case ErrorBaseResponse(:final errMessage):
-        emit(ForgetPasswordState.error(errMessage));
+        emit(
+          state.copyWith(
+            forgetPasswordState: BaseState<bool>(
+              isLoading: false,
+              errorMessage: errMessage,
+            ),
+          ),
+        );
     }
   }
 }

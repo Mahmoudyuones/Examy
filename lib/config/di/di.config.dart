@@ -86,14 +86,15 @@ extension GetItInjectableX on _i174.GetIt {
         resetPasswordUsecase: gh<_i383.ResetPasswordUsecase>(),
       ),
     );
-    gh.factory<_i425.ResetCodeViewModel>(
-      () => _i425.ResetCodeViewModel(
-        resetCodeUsecase: gh<_i467.ResetCodeUsecase>(),
-      ),
-    );
     gh.factory<_i930.ForgetPasswordUsecase>(
       () => _i930.ForgetPasswordUsecase(
         forgetPasswordRepo: gh<_i484.ForgetPasswordRepo>(),
+      ),
+    );
+    gh.factory<_i425.ResetCodeViewModel>(
+      () => _i425.ResetCodeViewModel(
+        gh<_i467.ResetCodeUsecase>(),
+        gh<_i930.ForgetPasswordUsecase>(),
       ),
     );
     gh.factory<_i902.ForgetPasswordViewModel>(

@@ -1,11 +1,11 @@
+import 'package:examy_app/config/base_state/base_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'forget_password_state.freezed.dart';
 
 @freezed
-class ForgetPasswordState with _$ForgetPasswordState {
-  const factory ForgetPasswordState.initial() = _Initial;
-  const factory ForgetPasswordState.loading() = _Loading;
-  const factory ForgetPasswordState.success() = _Success;
-  const factory ForgetPasswordState.error(String message) = _Error;
+abstract class ForgetPasswordState with _$ForgetPasswordState {
+  const factory ForgetPasswordState({
+    @Default(BaseState<bool>()) BaseState<bool> forgetPasswordState,
+  }) = _ForgetPasswordState;
 }

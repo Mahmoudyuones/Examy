@@ -30,4 +30,7 @@ class AppStrings {
   static const String passwordResetEmailSent = 'Password reset email sent';
   static const String codeVerified = 'Code verified';
   static const String passwordResetSuccess = 'Password reset successfully';
+  static const String codeSent = 'Code sent';
+  static const String resendCode = 'Resend code';
+  static const String verifyCode = 'Verify code';
 }

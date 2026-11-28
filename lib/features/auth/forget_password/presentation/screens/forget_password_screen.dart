@@ -57,7 +57,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   validator: Validators.email,
-                  onChanged: (_) => setState(() {}), // refresh button state
                   decoration: const InputDecoration(
                     labelText: AppStrings.email,
                     hintText: AppStrings.enterYourEmail,
@@ -65,35 +64,36 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 ),
                 Gap(48.h),
                 BlocConsumer<ForgetPasswordViewModel, ForgetPasswordState>(
+                  listenWhen: (previous, current) =>
+                      previous.forgetPasswordState !=
+                      current.forgetPasswordState,
                   listener: (context, state) {
-                    state.whenOrNull(
-                      success: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(AppStrings.passwordResetEmailSent),
-                          ),
-                        );
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BlocProvider(
-                              create: (context) => getIt<ResetCodeViewModel>(),
-                              child: const EmailVerificationScreen(),
+                    final s = state.forgetPasswordState;
+                    if (s.data == true) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(AppStrings.passwordResetEmailSent),
+                        ),
+                      );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BlocProvider(
+                            create: (context) => getIt<ResetCodeViewModel>(),
+                            child: ResetCodeScreen(
+                              email: _emailController.text,
                             ),
                           ),
-                        );
-                      },
-                      error: (errMessage) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text(errMessage)));
-                      },
-                    );
+                        ),
+                      );
+                    } else if (s.errorMessage != null) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(s.errorMessage!)));
+                    }
                   },
                   builder: (context, state) {
-                    final isLoading = state.maybeWhen(
-                      loading: () => true,
-                      orElse: () => false,
-                    );
+                    final isLoading = state.forgetPasswordState.isLoading;
                     return ElevatedButton(
                       onPressed:
                           Validators.isEmail(_emailController.text.trim())

@@ -78,26 +78,21 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
                 Gap(32.h),
                 BlocConsumer<ResetPasswordViewModel, ResetPasswordState>(
+                  listenWhen: (previous, current) =>
+                      previous.resetPasswordState != current.resetPasswordState,
                   listener: (context, state) {
-                    state.whenOrNull(
-                      success: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(AppStrings.passwordResetSuccess),
-                          ),
-                        );
-                      },
-                      error: (errMessage) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text(errMessage)));
-                      },
-                    );
+                    final s = state.resetPasswordState;
+                    if (s.data == true) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(AppStrings.passwordResetSuccess),
+                        ),
+                      );
+                      // TODO: Navigate to login screen
+                    }
                   },
                   builder: (context, state) {
-                    final isLoading = state.maybeWhen(
-                      loading: () => true,
-                      orElse: () => false,
-                    );
+                    final isLoading = state.resetPasswordState.isLoading;
                     return ElevatedButton(
                       onPressed: _onContinue,
                       child: isLoading

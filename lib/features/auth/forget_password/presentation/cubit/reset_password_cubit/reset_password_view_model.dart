@@ -1,4 +1,5 @@
 import 'package:examy_app/config/base_response/base_response.dart';
+import 'package:examy_app/config/base_state/base_state.dart';
 import 'package:examy_app/features/auth/forget_password/domain/usecase/reset_password_usecase.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/reset_password_cubit/reset_password_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +11,7 @@ import 'reset_password_state.dart';
 class ResetPasswordViewModel extends Cubit<ResetPasswordState> {
   final ResetPasswordUsecase _resetPasswordUsecase;
   ResetPasswordViewModel({required this._resetPasswordUsecase})
-    : super(const ResetPasswordState.initial());
+    : super(const ResetPasswordState());
 
   void doEvent(ResetPasswordEvent event) {
     switch (event) {
@@ -20,7 +21,7 @@ class ResetPasswordViewModel extends Cubit<ResetPasswordState> {
   }
 
   Future<void> _resetPassword(String email, String newPassword) async {
-    emit(const ResetPasswordState.loading());
+    emit(state.copyWith(resetPasswordState: BaseState<bool>(isLoading: true)));
     final response = await _resetPasswordUsecase.resetPassword(
       email,
       newPassword,
@@ -28,9 +29,20 @@ class ResetPasswordViewModel extends Cubit<ResetPasswordState> {
 
     switch (response) {
       case SuccessBaseResponse():
-        emit(const ResetPasswordState.success());
+        emit(
+          state.copyWith(
+            resetPasswordState: BaseState<bool>(data: true, isLoading: false),
+          ),
+        );
       case ErrorBaseResponse(:final errMessage):
-        emit(ResetPasswordState.error(errMessage));
+        emit(
+          state.copyWith(
+            resetPasswordState: BaseState<bool>(
+              errorMessage: errMessage,
+              isLoading: false,
+            ),
+          ),
+        );
     }
   }
 }

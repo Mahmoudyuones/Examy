@@ -1,7 +1,5 @@
 import 'package:examy_app/core/constants/ui_strings.dart';
 import 'package:examy_app/core/theme/app_colors.dart';
-import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_cubit/forget_password_event.dart';
-import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_cubit/forget_password_view_model.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/reset_code_cubit/reset_code_event.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/reset_code_cubit/reset_code_state.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/reset_code_cubit/reset_code_view_model.dart';
@@ -13,17 +11,16 @@ import 'package:gap/gap.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:pinput/pinput.dart';
 
-class EmailVerificationScreen extends StatefulWidget {
-  const EmailVerificationScreen({super.key, this.email});
+class ResetCodeScreen extends StatefulWidget {
+  const ResetCodeScreen({super.key, this.email});
 
   final String? email;
 
   @override
-  State<EmailVerificationScreen> createState() =>
-      _EmailVerificationScreenState();
+  State<ResetCodeScreen> createState() => _ResetCodeScreenState();
 }
 
-class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
+class _ResetCodeScreenState extends State<ResetCodeScreen> {
   final _pinController = TextEditingController();
 
   @override
@@ -39,10 +36,9 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   void _resend() {
     if (widget.email != null) {
       _pinController.clear();
-      context.read<ResetCodeViewModel>().reset();
-      context.read<ForgetPasswordViewModel>().doEvent(
-        SendEmail(email: widget.email!),
-      );
+      context.read<ResetCodeViewModel>()
+        ..reset()
+        ..doEvent(ResendCode(email: widget.email!));
     }
   }
 
@@ -55,7 +51,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       height: 64.h,
       textStyle: Theme.of(context).textTheme.titleLarge,
       decoration: BoxDecoration(
-        color: AppColors.primaryLight, // light blue fill
+        color: AppColors.primaryLight,
         borderRadius: BorderRadius.circular(12.r),
       ),
     );
@@ -76,35 +72,29 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 subtitle: AppStrings.pleaseEnterYourCode,
               ),
               BlocConsumer<ResetCodeViewModel, ResetCodeState>(
+                listenWhen: (previous, current) =>
+                    previous.verifyCodeState != current.verifyCodeState,
                 listener: (context, state) {
-                  state.whenOrNull(
-                    success: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text(AppStrings.codeVerified)),
-                      );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              ResetPasswordScreen(email: widget.email),
-                        ),
-                      );
-                    },
-                    error: (errMessage) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(errMessage)));
-                    },
-                  );
+                  final s = state.verifyCodeState;
+                  if (s.data == true) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text(AppStrings.codeVerified)),
+                    );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ResetPasswordScreen(email: widget.email),
+                      ),
+                    );
+                  } else if (s.errorMessage != null) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(s.errorMessage!)));
+                  }
                 },
                 builder: (context, state) {
-                  final isLoading = state.maybeWhen(
-                    loading: () => true,
-                    orElse: () => false,
-                  );
-                  final isError = state.maybeWhen(
-                    error: (_) => true,
-                    orElse: () => false,
-                  );
+                  final isLoading = state.verifyCodeState.isLoading;
+                  final isError = state.verifyCodeState.errorMessage != null;
 
                   return Pinput(
                     enabled: !isLoading,
@@ -156,15 +146,45 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 children: [
                   const Text(AppStrings.didntReceiveCode),
                   Gap(4.w),
-                  InkWell(
-                    onTap: _resend,
-                    child: Text(
-                      AppStrings.resend,
-                      style: TextStyle(
-                        color: colors.primary,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
+                  BlocConsumer<ResetCodeViewModel, ResetCodeState>(
+                    listenWhen: (previous, current) =>
+                        previous.resendCodeState != current.resendCodeState,
+                    listener: (context, state) {
+                      final s = state.resendCodeState;
+                      if (s.data == true) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text(AppStrings.codeSent)),
+                        );
+                      } else if (s.errorMessage != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(s.errorMessage!)),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      final isLoading = state.resendCodeState.isLoading;
+
+                      return isLoading
+                          ? const Center(
+                              child: SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                            )
+                          : InkWell(
+                              onTap: _resend,
+                              child: Text(
+                                AppStrings.resend,
+                                style: TextStyle(
+                                  color: colors.primary,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            );
+                    },
                   ),
                 ],
               ),
