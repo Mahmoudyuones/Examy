@@ -1,15 +1,14 @@
-import 'package:examy_app/config/di/di.dart';
+import 'package:examy_app/config/router/app_routes.dart';
 import 'package:examy_app/core/constants/ui_strings.dart';
 import 'package:examy_app/core/validators/app_validators.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_cubit/forget_password_event.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_cubit/forget_password_state.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/cubit/forget_password_cubit/forget_password_view_model.dart';
-import 'package:examy_app/features/auth/forget_password/presentation/cubit/reset_code_cubit/reset_code_view_model.dart';
-import 'package:examy_app/features/auth/forget_password/presentation/screens/reset_code_screen.dart';
 import 'package:examy_app/features/auth/forget_password/presentation/widgets/auth_header.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
@@ -75,16 +74,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           content: Text(AppStrings.passwordResetEmailSent),
                         ),
                       );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BlocProvider(
-                            create: (context) => getIt<ResetCodeViewModel>(),
-                            child: ResetCodeScreen(
-                              email: _emailController.text,
-                            ),
-                          ),
-                        ),
+                      context.go(
+                        AppRoutes.resetPassword,
+                        extra: _emailController.text.trim(),
                       );
                     } else if (s.errorMessage != null) {
                       ScaffoldMessenger.of(
