@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:examy_app/core/constants/api_constants.dart';
-import 'package:examy_app/features/auth/forget_password/data/models/forget_password_body.dart';
-import 'package:examy_app/features/auth/forget_password/data/models/forget_password_reponse.dart';
-import 'package:examy_app/features/auth/forget_password/data/models/reset_code_body.dart';
-import 'package:examy_app/features/auth/forget_password/data/models/reset_password_body.dart';
+import 'package:examy_app/core/constants/app_endpoints.dart';
+import 'package:examy_app/features/auth/forget_password/data/models/forget_password_request.dart';
+import 'package:examy_app/features/auth/forget_password/data/models/forget_password_response.dart';
+import 'package:examy_app/features/auth/forget_password/data/models/reset_code_request.dart';
+import 'package:examy_app/features/auth/forget_password/data/models/reset_password_request.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -15,14 +15,16 @@ abstract class ForgetPasswordClient {
   @factoryMethod
   factory ForgetPasswordClient(Dio dio) = _ForgetPasswordClient;
 
-  @POST(ApiConstants.forgetPasswordEndpoint)
+  @POST(AppEndpoints.forgetPasswordEndpoint)
   Future<ForgetPasswordResponse> forgetPassword(
-    @Body() ForgetPasswordBody body,
+    @Body() ForgetPasswordRequest body,
   );
 
-  @POST(ApiConstants.verifyResetCode)
-  Future<ForgetPasswordResponse> verifyResetCode(@Body() ResetCodeBody body);
+  @POST(AppEndpoints.verifyResetCode)
+  Future<ForgetPasswordResponse> verifyResetCode(@Body() ResetCodeRequest body);
 
-  @PUT(ApiConstants.resetPasswordEndpoint)
-  Future<ForgetPasswordResponse> resetPassword(@Body() ResetPasswordBody body);
+  @PUT(AppEndpoints.resetPasswordEndpoint)
+  Future<ForgetPasswordResponse> resetPassword(
+    @Body() ResetPasswordRequest body,
+  );
 }

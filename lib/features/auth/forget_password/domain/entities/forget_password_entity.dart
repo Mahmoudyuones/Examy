@@ -1,5 +1,9 @@
-class ForgetPasswordEntity {
-  final String email;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  ForgetPasswordEntity({required this.email});
+part 'forget_password_entity.freezed.dart';
+
+@freezed
+abstract class ForgetPasswordEntity with _$ForgetPasswordEntity {
+  const factory ForgetPasswordEntity({required String email}) =
+      _ForgetPasswordEntity;
 }

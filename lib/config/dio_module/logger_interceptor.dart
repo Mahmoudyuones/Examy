@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 @singleton
-@singleton
 class LoggerInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {

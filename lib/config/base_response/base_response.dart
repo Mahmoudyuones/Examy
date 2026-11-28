@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:examy_app/core/constants/api_constants.dart';
+import 'package:examy_app/core/constants/app_endpoints.dart';
 
 sealed class BaseResponse<T> {}
 
@@ -18,7 +18,7 @@ class ErrorBaseResponse<T> extends BaseResponse<T> {
 
   ErrorBaseResponse({Object? errorObj})
     : errMessage = errorObj == null
-          ? ApiConstants.genericErrorMsg
+          ? AppEndpoints.genericErrorMsg
           : _getErrorMsg(errorObj);
 
   static String _getErrorMsg(Object error) {
@@ -42,11 +42,11 @@ class ErrorBaseResponse<T> extends BaseResponse<T> {
           return 'Request was cancelled.';
 
         default:
-          return ApiConstants.genericErrorMsg;
+          return AppEndpoints.genericErrorMsg;
       }
     }
 
-    return ApiConstants.genericErrorMsg;
+    return AppEndpoints.genericErrorMsg;
   }
 
   static String? _extractServerMessage(dynamic data) {
@@ -69,7 +69,7 @@ class ErrorBaseResponse<T> extends BaseResponse<T> {
       case 500:
         return 'Server error. Please try again later.';
       default:
-        return ApiConstants.genericErrorMsg;
+        return AppEndpoints.genericErrorMsg;
     }
   }
 }

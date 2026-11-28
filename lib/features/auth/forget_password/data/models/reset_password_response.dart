@@ -1,19 +1,15 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'reset_password_response.freezed.dart';
 part 'reset_password_response.g.dart';
 
-@JsonSerializable()
-class ResetPasswordResponse {
-  final String email;
-  final String newPassword;
+@freezed
+abstract class ResetPasswordResponse with _$ResetPasswordResponse {
+  const factory ResetPasswordResponse({
+    required String email,
+    required String newPassword,
+  }) = _ResetPasswordResponse;
 
-  ResetPasswordResponse({required this.email, required this.newPassword});
-
-  factory ResetPasswordResponse.fromJson(Map<String, dynamic> json) {
-    return _$ResetPasswordResponseFromJson(json);
-  }
-
-  Map<String, dynamic> toJson() {
-    return _$ResetPasswordResponseToJson(this);
-  }
+  factory ResetPasswordResponse.fromJson(Map<String, dynamic> json) =>
+      _$ResetPasswordResponseFromJson(json);
 }

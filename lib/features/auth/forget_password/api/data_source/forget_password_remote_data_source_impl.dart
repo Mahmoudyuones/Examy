@@ -1,46 +1,38 @@
 import 'package:examy_app/config/base_response/base_response.dart';
+import 'package:examy_app/config/network/safe_api_call.dart';
 import 'package:examy_app/features/auth/forget_password/api/api_client/api_client.dart';
-import 'package:examy_app/features/auth/forget_password/data/models/forget_password_body.dart';
-import 'package:examy_app/features/auth/forget_password/data/models/reset_code_body.dart';
-import 'package:examy_app/features/auth/forget_password/data/models/reset_password_body.dart';
+import 'package:examy_app/features/auth/forget_password/data/models/forget_password_request.dart';
+import 'package:examy_app/features/auth/forget_password/data/models/reset_code_request.dart';
+import 'package:examy_app/features/auth/forget_password/data/models/reset_password_request.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/data_source/forget_password_remote_data_source.dart';
 
 @LazySingleton(as: ForgetPasswordRemoteDataSource)
 class ForgetPasswordRemoteDataSourceImpl
-    extends ForgetPasswordRemoteDataSource {
+    implements ForgetPasswordRemoteDataSource {
   final ForgetPasswordClient forgetPasswordClient;
 
   ForgetPasswordRemoteDataSourceImpl({required this.forgetPasswordClient});
 
   @override
-  Future<BaseResponse<void>> forgetPassword(ForgetPasswordBody body) async {
-    try {
+  Future<BaseResponse<void>> forgetPassword(ForgetPasswordRequest body) async {
+    return safeCallApi(() async {
       await forgetPasswordClient.forgetPassword(body);
-      return SuccessBaseResponse(data: null);
-    } catch (e) {
-      return ErrorBaseResponse(errorObj: e);
-    }
+    });
   }
 
   @override
-  Future<BaseResponse<void>> verifyResetCode(ResetCodeBody code) async {
-    try {
+  Future<BaseResponse<void>> verifyResetCode(ResetCodeRequest code) async {
+    return safeCallApi(() async {
       await forgetPasswordClient.verifyResetCode(code);
-      return SuccessBaseResponse(data: null);
-    } catch (e) {
-      return ErrorBaseResponse(errorObj: e);
-    }
+    });
   }
 
   @override
-  Future<BaseResponse<void>> resetPassword(ResetPasswordBody body) async {
-    try {
+  Future<BaseResponse<void>> resetPassword(ResetPasswordRequest body) async {
+    return safeCallApi(() async {
       await forgetPasswordClient.resetPassword(body);
-      return SuccessBaseResponse(data: null);
-    } catch (e) {
-      return ErrorBaseResponse(errorObj: e);
-    }
+    });
   }
 }

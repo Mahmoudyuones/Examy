@@ -1,6 +1,11 @@
-class ResetPasswordEntity {
-  final String email;
-  final String newPassword;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  ResetPasswordEntity({required this.email, required this.newPassword});
+part 'reset_password_entity.freezed.dart';
+
+@freezed
+abstract class ResetPasswordEntity with _$ResetPasswordEntity {
+  const factory ResetPasswordEntity({
+    required String email,
+    required String newPassword,
+  }) = _ResetPasswordEntity;
 }
